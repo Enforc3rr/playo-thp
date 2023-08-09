@@ -1,4 +1,4 @@
 exports.logRequests = (req,res,next)=>{
-    console.log(`Request Received at ${req.url}`);
+    console.log(`${req.method} request received at ${req.url}`);
     next();
 }

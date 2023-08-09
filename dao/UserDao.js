@@ -2,7 +2,7 @@ const userDatabase = require("../models/UserModel");
 
 exports.createUserDao = async (userData) => {
     try {
-        return await userDatabase.create(userData);
+        return await userDatabase.findOneAndUpdate({emailId: userData.emailId}, userData, {new: true, upsert: true});
     } catch (e) {
         console.error(`Error ${e.message} occurred while saving user data`);
         throw new Error(e.message);
