@@ -27,3 +27,6 @@ databaseConnection()
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Starting server at PORT ${PORT}`));
+
+
+module.exports = app;
