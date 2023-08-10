@@ -1,5 +1,5 @@
 const {isValidEmail} = require("../Utils/MiscellaneousUtils");
-const {findUser} = require("../dao/UserDao");
+const {findUserDao} = require("../dao/UserDao");
 const {createExpenseLogEntryDao} = require("../dao/ExpensesLogDao");
 
 
@@ -11,7 +11,7 @@ exports.createExpenseLogEntryController = async (req,res) =>{
             return res.status(400).json({
                 message: "Invalid Email Format"
             });
-        const userData= await findUser(userEmail);
+        const userData= await findUserDao(userEmail);
         if (!userData)
             return res.status(400).json({
                 message: "User not found"

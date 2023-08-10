@@ -1,6 +1,6 @@
-const {createUserDao, findUser} = require("../dao/UserDao");
+const {createUserDao, findUserDao, findAllUsersDao} = require("../dao/UserDao");
 const {isValidEmail} = require("../Utils/MiscellaneousUtils");
-const {findAllOwnedToByEmailDao} = require("../dao/ExpensesLogDao");
+const {findAllOwnedToByEmailDao, findAllOwnedByEmailDao} = require("../dao/ExpensesLogDao");
 
 exports.createUserController = async (req, res) => {
     try {
@@ -25,23 +25,42 @@ exports.createUserController = async (req, res) => {
 
 exports.findUserDetailsController = async (req, res) => {
     try {
-        const userEmail = req.param.emailId;
+        const userEmail = req.query.emailId;
+        if (!userEmail) {
+            console.info(`Requesting to find all user data`);
+            const allUserData = await findAllUsersDao();
+            return res.status(200).json({
+                message: "User Details found",
+                data: allUserData
+            });
+        }
+
         console.info(`Requesting to find user data of ${userEmail}`);
         if (!isValidEmail(userEmail))
             return res.status(400).json({
                 message: "Invalid Email Format"
             });
-        const userData= await findUser(userEmail);
+        const userData = await findUserDao(userEmail);
         if (!userData)
             return res.status(400).json({
                 message: "User not found"
             });
-        const [userOwnedToData, userOwnedByData] = await Promise.all([findAllOwnedToByEmailDao(userEmail), findAllOwnedToByEmailDao(userEmail)]);
+        const [userOwnedToData, userOwnedByData] = await Promise.all([findAllOwnedToByEmailDao(userEmail), findAllOwnedByEmailDao(userEmail)]);
         console.info(`Found user data of ${userEmail}`);
+        // TODO : Merge these two functions after merging its DAO
+        const expensesOwnedToUser = {};
+        userOwnedToData.forEach(data => {
+            expensesOwnedToUser[data.ownedBy] = (expensesOwnedToUser[data.ownedBy] || 0) + data.expense;
+        });
+        const expensesOwnedByUser = {};
+        userOwnedByData.forEach(data => {
+            expensesOwnedByUser[data.ownedTo] = expensesOwnedByUser[data.ownedTo] || 0 + data.expense;
+        });
+
         return res.status(200).json({
             message: "User Details found",
             data: {
-                userData, userOwnedToData, userOwnedByData
+                userData, expensesOwnedByUser, expensesOwnedToUser
             }
         });
     } catch (e) {

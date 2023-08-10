@@ -3,9 +3,11 @@ const mongoose= require("mongoose");
 const {isValidEmail} = require("../Utils/MiscellaneousUtils");
 const {createUserDao} = require("./UserDao");
 
+// TODO : (findAllOwnedToByEmailDao & findAllOwnedByEmailDao) can be combined using using OR condition
+
 exports.findAllOwnedToByEmailDao = async (email) => {
     try {
-        return await expensesLogDatabase.find({ownedTo: email}, {totalExpense: 1, ownedTo: 1, _id: 0});
+        return await expensesLogDatabase.find({ownedTo: email}, {expense: 1, ownedBy : 1 , _id: 0});
     } catch (e) {
         console.error(`Error ${e.message} occurred while fetching fetching owned to data`);
         throw new Error(e.message);
@@ -14,7 +16,7 @@ exports.findAllOwnedToByEmailDao = async (email) => {
 
 exports.findAllOwnedByEmailDao = async (email) => {
     try {
-        return await expensesLogDatabase.find({ownedBy: email}, {totalExpense: 1, ownedBy: 1, _id: 0});
+        return await expensesLogDatabase.find({ownedBy: email}, {expense: 1, ownedTo: 1, _id: 0});
     } catch (e) {
         console.error(`Error ${e.message} occurred while fetching owned by data`);
         throw new Error(e.message);
