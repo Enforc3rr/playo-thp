@@ -1,10 +1,12 @@
 const express = require("express");
-const {createExpenseLogEntryController} = require("../controller/ExpenseLogController");
+const {createExpenseLogEntryController, findUserExpenseDetails} = require("../controller/ExpenseLogController");
 const expensesLogRouter = express.Router();
 
 expensesLogRouter.route("/")
-    .post(createExpenseLogEntryController)
-    .get();
+    .post(createExpenseLogEntryController);
+expensesLogRouter.route("/:emailId")
+    .get(findUserExpenseDetails);
+
 
 
 module.exports = {
