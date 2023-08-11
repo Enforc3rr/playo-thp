@@ -28,7 +28,7 @@ exports.createExpenseLogEntryController = async (req, res) => {
             return res.status(400).json({
                 message: "ownedBy array is required"
             });
-        const amountPerPerson = req.body.totalExpense / req.body.ownedBy.length;
+        const amountPerPerson = req.body.totalExpense / (req.body.ownedBy.length + 1);
         await createExpenseLogEntryDao({
             expensePerPerson: amountPerPerson,
             ownedTo: req.body.ownedTo,

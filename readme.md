@@ -27,6 +27,10 @@ API documentation -> https://documenter.getpostman.com/view/14030847/2s9Xy3srgD
 
 
 ### 1. Expense Tracker
+- Concept of ownedTo & ownedBy
+  - ownedTo represents the person who's supposed to receive the money.
+  - ownedBy represents the person who's supposed to pay the money.
+  - Example : if A and B went to a cafe and A paid the entire sum , then here A's email would be in ownedTo category while B's email would in ownedBy category.
 - Models 
   - User Model 
     ```
