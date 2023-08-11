@@ -11,7 +11,10 @@
 - MongoDB
 - Mocha + Chai (for testing)
 
-#### Steps to run the application : `npm run start` 
+#### Steps to run the application :
+- create a `config.env` file in `configuration` folder.
+- `npm run start`
+
 #### Steps to run the test cases : `npm test`
 
 
@@ -57,6 +60,12 @@ API documentation -> https://documenter.getpostman.com/view/14030847/2s9Xy3srgD
     fileName : String | Index,
     contentToEncode : String
     ``` 
+    
+
+
+
+
+
     
 
 
