@@ -1,6 +1,6 @@
 const expensesLogDatabase = require("../models/ExpensesLogModel");
 const mongoose = require("mongoose");
-const {isValidEmail} = require("../Utils/MiscellaneousUtils");
+const {isValidEmail} = require("../utils/MiscellaneousUtils");
 const {createUserDao} = require("./UserDao");
 
 // TODO : (findAllOwnedToByEmailDao & findAllOwnedByEmailDao) can be combined using using OR condition

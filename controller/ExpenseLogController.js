@@ -1,4 +1,4 @@
-const {isValidEmail} = require("../Utils/MiscellaneousUtils");
+const {isValidEmail} = require("../utils/MiscellaneousUtils");
 const {findUserDao} = require("../dao/UserDao");
 const {createExpenseLogEntryDao, findAllOwnedToByEmailDao, findAllOwnedByEmailDao} = require("../dao/ExpensesLogDao");
 

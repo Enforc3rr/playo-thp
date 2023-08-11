@@ -1,5 +1,5 @@
 const {findUserDao} = require("../dao/UserDao");
-const {generateQrCode, isValidStringForQRCode, QR_CODE_PATH} = require("../Utils/MiscellaneousUtils");
+const {generateQrCode, isValidStringForQRCode, QR_CODE_PATH} = require("../utils/MiscellaneousUtils");
 const {
     createQrCodeMetaDataDao,
     fetchAllTheQRCodeGeneratedByAUser,

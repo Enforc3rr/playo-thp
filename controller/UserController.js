@@ -1,5 +1,5 @@
 const {createUserDao, findAllUsersDao, findUserDao} = require("../dao/UserDao");
-const {isValidEmail} = require("../Utils/MiscellaneousUtils");
+const {isValidEmail} = require("../utils/MiscellaneousUtils");
 
 /*
    * @desc Create User
