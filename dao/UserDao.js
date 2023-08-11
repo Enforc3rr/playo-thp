@@ -1,5 +1,8 @@
 const userDatabase = require("../models/UserModel");
 
+/**
+ * To upsert the user
+ */
 exports.createUserDao = async (userData) => {
     try {
         return await userDatabase.findOneAndUpdate({emailId: userData.emailId}, userData, {new: true, upsert: true});

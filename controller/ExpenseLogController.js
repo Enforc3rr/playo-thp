@@ -2,7 +2,11 @@ const {isValidEmail} = require("../Utils/MiscellaneousUtils");
 const {findUserDao} = require("../dao/UserDao");
 const {createExpenseLogEntryDao, findAllOwnedToByEmailDao, findAllOwnedByEmailDao} = require("../dao/ExpensesLogDao");
 
-
+/*
+   * @desc Create Expense Log Entry
+   * @port 8080
+   * @route POST /expense
+*/
 exports.createExpenseLogEntryController = async (req, res) => {
     try {
         const userEmail = req.body.ownedTo;
@@ -16,7 +20,7 @@ exports.createExpenseLogEntryController = async (req, res) => {
             return res.status(404).json({
                 message: "User not found"
             });
-        if (typeof req.body.totalExpense !== "number" && req.body.totalExpense > 0)
+        if (typeof req.body.totalExpense !== "number" ||( typeof req.body.totalExpense === "number" && req.body.totalExpense <= 0))
             return res.status(400).json({
                 message: "unexpected totalExpense value"
             });
@@ -46,6 +50,12 @@ exports.createExpenseLogEntryController = async (req, res) => {
     }
 }
 
+/*
+   * @desc Find user expense details of a single user or expenses of the user wrt a particular person
+   * @port 8080
+   * @route GET /expense/:emailId
+   * @QueryParam userEmail
+*/
 exports.findUserExpenseDetails = async (req, res) => {
     try {
         const ownerId = req.params.emailId;
@@ -63,6 +73,7 @@ exports.findUserExpenseDetails = async (req, res) => {
         const [userOwnedToData, userOwnedByData] = await Promise.all([findAllOwnedToByEmailDao(ownerId, emailOfDifferentUser), findAllOwnedByEmailDao(ownerId, emailOfDifferentUser)]);
         console.log(`Found user data of ${ownerId}`);
         // TODO : Merge these two functions after merging its DAO
+        // Segregating the data on the basis of the user
         const expensesOwnedToUser = {};
         userOwnedToData.forEach(data => {
             expensesOwnedToUser[data.ownedBy] = (expensesOwnedToUser[data.ownedBy] || 0) + data.expense;

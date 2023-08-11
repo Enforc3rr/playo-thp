@@ -1,6 +1,11 @@
-const {createUserDao, findAllUsersDao} = require("../dao/UserDao");
+const {createUserDao, findAllUsersDao, findUserDao} = require("../dao/UserDao");
 const {isValidEmail} = require("../Utils/MiscellaneousUtils");
 
+/*
+   * @desc Create User
+   * @port 8080
+   * @route POST /user
+*/
 exports.createUserController = async (req, res) => {
     try {
         console.log(`Saving User Details`);
@@ -8,7 +13,10 @@ exports.createUserController = async (req, res) => {
             return res.status(400).json({
                 message: "Invalid Email Format"
             });
-        req.body["joinedAt"] = Date.now();
+        const preExistingUser = await findUserDao(req.body.emailId);
+        if(!preExistingUser){
+            req.body["joinedAt"] = Date.now();
+        }
         const savedUser = await createUserDao(req.body);
         console.log(`Saved User Details ${req.body.emailId}`);
         return res.status(201).json({
@@ -21,13 +29,32 @@ exports.createUserController = async (req, res) => {
         });
     }
 }
+
+/*
+   * @desc Find all users/data of single user
+   * @port 8080
+   * @route GET /user
+   * @QueryParam emailId
+*/
 exports.findAllUsersController = async (req, res) => {
     try {
-        console.info(`Requesting to find all user data`);
-        const allUserData = await findAllUsersDao();
+        const emailId = req.query.emailId;
+        if (!emailId) {
+            console.log(`Requesting to find all user data`);
+            const allUserData = await findAllUsersDao();
+            return res.status(200).json({
+                message: "User Details found",
+                data: allUserData
+            });
+        }
+        const userData = await findUserDao(emailId);
+        if (!userData)
+            return res.status(404).json({
+                message: "User not found"
+            });
         return res.status(200).json({
             message: "User Details found",
-            data: allUserData
+            data: userData
         });
     } catch (e) {
         console.error(`Error ${e.message} in findAllUserController function`);

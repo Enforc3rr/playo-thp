@@ -7,6 +7,11 @@ const {
 } = require("../dao/QRCodeDao");
 const path = require("path");
 
+/*
+   * @desc Generate QR code
+   * @port 8080
+   * @route POST /qr
+*/
 exports.qrCodeGenerationController = async (req, res) => {
     try {
         const generatedBy = req.body.generatedBy;
@@ -35,6 +40,12 @@ exports.qrCodeGenerationController = async (req, res) => {
     }
 }
 
+/*
+   * @desc Fetch all QR code metadata of a single user or fetch a single QR code.
+   * @port 8080
+   * @route GET /qr/:emailId
+   * @QueryParam fileName
+*/
 exports.fetchGeneratedQrCodeController = async (req, res) => {
     try {
         const generatedBy = req.params.emailId;
