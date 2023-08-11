@@ -18,7 +18,7 @@ Config.env file format ->
 DB=
 PORT=
 ```
-- To run the application type `npm run start` in temrinal.
+- To run the application type `npm run start` in terminal.
 
 #### Steps to run the test cases : `npm test`
 
