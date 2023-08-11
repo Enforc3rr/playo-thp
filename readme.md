@@ -12,8 +12,13 @@
 - Mocha + Chai (for testing)
 
 #### Steps to run the application :
-- create a `config.env` file in `configuration` folder.
-- `npm run start`
+- create a `config.env` file in `configuration` folder.   
+Config.env file format -> 
+```
+DB=
+PORT=
+```
+- To run the application type `npm run start` in temrinal.
 
 #### Steps to run the test cases : `npm test`
 
