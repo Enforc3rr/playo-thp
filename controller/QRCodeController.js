@@ -27,7 +27,7 @@ exports.qrCodeGenerationController = async (req, res) => {
             });
         const fileName = await generateQrCode(contentToEncode);
         const qrCodeMetaData = await createQrCodeMetaDataDao({fileName, generatedBy, contentToEncode});
-        console.log(`QR ${fileName} successfully generated for the user ${req.body.generatedBy}`);
+        console.info(`QR ${fileName} successfully generated for the user ${req.body.generatedBy}`);
         return res.status(201).json({
             message: `QR ${fileName} successfully generated for the user ${req.body.generatedBy}`,
             data: qrCodeMetaData

@@ -18,7 +18,7 @@ exports.createUserController = async (req, res) => {
             req.body["joinedAt"] = Date.now();
         }
         const savedUser = await createUserDao(req.body);
-        console.log(`Saved User Details ${req.body.emailId}`);
+        console.info(`Saved User Details ${req.body.emailId}`);
         return res.status(201).json({
             message: "User details saved", data: savedUser
         });
