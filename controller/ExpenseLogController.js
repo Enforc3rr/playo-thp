@@ -20,7 +20,7 @@ exports.createExpenseLogEntryController = async (req, res) => {
             return res.status(404).json({
                 message: "User not found"
             });
-        if (typeof req.body.totalExpense !== "number" ||( typeof req.body.totalExpense === "number" && req.body.totalExpense <= 0))
+        if (typeof req.body.totalExpense !== "number" ||( typeof req.body.totalExpense === "number" && req.body.totalExpense <= 0) )
             return res.status(400).json({
                 message: "unexpected totalExpense value"
             });
